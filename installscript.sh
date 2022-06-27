@@ -38,8 +38,13 @@ echo 'set expandtab' >> $(VIMRC)
 # Allow for shift tab 
 echo 'nnoremap <S-Tab> <<' >> $(VIMRC)
 echo 'inoremap <S-Tab> <C-d>' >> $(VIMRC)
-# Print relative line number
+# Print hybrid line number
 echo 'set number relativenumber' >> $(VIMRC)
+# Allow for strg+backspace
+echo 'imap <C-BS> <C-W>' >> $(VIMRC)
+echo 'noremap! <C-BS> <C-w>' >> $(VIMRC)
+echo 'noremap! <C-h> <C-w>' >> $(VIMRC)
+
 
 # Install lsd instead of ls
 URL_LSD=$(curl -s https://api.github.com/repos/Peltoche/lsd/releases | grep browser_download_url | grep 'amd64[.]deb' | head -n 1 | cut -d '"' -f 4)
