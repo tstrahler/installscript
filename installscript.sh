@@ -53,6 +53,10 @@ sudo dpkg -i lsd.deb
 echo 'alias ls="lsd"' >> $(BASHRC)
 echo 'alias sl="ls"' >> $(BASHRC)
 
+# Allow for ctrl+backspace in terminal
+INPUTRC=~/.inputrc
+echo '"\C-h": backward-kill-word' >> $(INPUTRC)
+
 # Install Argos shell extension (fixed for 22.04)
 git clone https://github.com/Coda-Coda/argos.git
 cd $TEMP/argos
