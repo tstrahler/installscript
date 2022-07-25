@@ -11,55 +11,21 @@ sudo apt update
 sudo apt upgrade
 
 # Install utilities
-sudo apt install vim bat pandoc texlive curl tldr
+sudo apt install vim bat pandoc curl tldr flatpak inotify-tools
 
 # Install software
-sudo apt install geary
+sudo apt install geary firefox gimp textlive-full
+sudo snap install drawio
 
-# Create temp rubbish directory for install
-TEMP=$(pwd)/temp_install
-mkdir $TEMP
+# Install Tangram Browser
+flatpak install flathub re.sonny.Tangram
 
-# Configure bashrc
-BASHRC=~/.bashrc
-echo 'alias q="exit"' >> $(BASHRC)
-echo 'alias bat="batcat"' >> $(BASHRC)
-echo 'alias xo="xdg-open"' >> $(BASHRC)
-echo 'alias lt="ls --tree"' >> $(BASHRC)
+# Install Uni VPN
+sudo apt install openconnect network-manager-openconnect
 
-# Configure vimrc
-VIMRC=/usr/share/vim/vimrc
-# Insert 4 spaces instead of tabs
-echo 'set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab' >> $(VIMRC)
-echo 'filetype plugin indent on' >> $(VIMRC)
-echo 'set tabstop=4' >> $(VIMRC)
-echo 'set shiftwidth=4' >> $(VIMRC)
-echo 'set expandtab' >> $(VIMRC)
-# Allow for shift tab 
-echo 'nnoremap <S-Tab> <<' >> $(VIMRC)
-echo 'inoremap <S-Tab> <C-d>' >> $(VIMRC)
-# Print hybrid line number
-echo 'set number relativenumber' >> $(VIMRC)
-# Allow for strg+backspace
-echo 'imap <C-BS> <C-W>' >> $(VIMRC)
-echo 'noremap! <C-BS> <C-w>' >> $(VIMRC)
-echo 'noremap! <C-h> <C-w>' >> $(VIMRC)
-
-
-# Install lsd instead of ls
-URL_LSD=$(curl -s https://api.github.com/repos/Peltoche/lsd/releases | grep browser_download_url | grep 'amd64[.]deb' | head -n 1 | cut -d '"' -f 4)
-wget $(URL_LSD) -O lsd.deb
-sudo dpkg -i lsd.deb
-echo 'alias ls="lsd"' >> $(BASHRC)
-echo 'alias sl="ls"' >> $(BASHRC)
-
-# Allow for ctrl+backspace in terminal
+# Modify all program configs
 INPUTRC=~/.inputrc
-echo '"\C-h": backward-kill-word' >> $(INPUTRC)
+echo '"\C-h": backward-kill-word' >> $INPUTRC
 
-# Install Argos shell extension (fixed for 22.04)
-git clone https://github.com/Coda-Coda/argos.git
-cd $TEMP/argos
-cp argos@pew.worldwidemann.com $HOME/.local/share/gnome-shell/extensions/
-mkdir $HOME/.config/argos
-cp $INSTALL_DIR/argos/* $HOME/.config/argos
+cat vimrc >> .vimrc
+cat bashrc >> .bashrc
